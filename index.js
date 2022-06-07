@@ -16,8 +16,7 @@ const pool = new pg.Pool({connectionString: conString, ssl: {rejectUnauthorized:
 
 const login = require('./middleware/login');
 
-//CONFIGS DOTENV
-/*
+/*CONFIGS DOTENV
 const dbHost = process.env.DB_HOST;
 const dbPort = process.env.DB_PORT;
 const dbName = process.env.DB_NAME;
@@ -124,7 +123,7 @@ app.put('/usuarios/:id', (req, res) => {
 
             //update usuarios set nome=$1, email =$2, senha=$3, cpf=$4, fone=$5, cep=$6, pais=$7, estado=$8, cidade=$9, bairro=$10, rua=$11, numero=$12, complemento=$13, perfil=$14
             if (result.rowCount > 0) {
-                var sql = 'update usuarios set nome=$1, email =$2, senha=$3, cpf=$4, fone=$5, cep=$6, estado=$7, cidade=$9, bairro=$10, rua=$11, numero=$12, complemento=$13, perfil=$14 where id=$15'
+                var sql = 'update usuarios set nome=$1, email=$2, senha=$3, cpf=$4, fone=$5, cep=$6, estado=$7, cidade=$9, bairro=$10, rua=$11, numero=$12, complemento=$13, perfil=$14 where id=$15'
                 let valores = [req.body.nome, req.body.email, req.body.senha, req.body.cpf, req.body.fone, req.body.cep, req.body.estado, req.body.cidade, req.body.bairro, req.body.rua, req.body.numero, req.body.complemento, req.body.perfil, req.params.id];
 
                 client.query(sql, valores, (error2, result2) => {
@@ -137,7 +136,7 @@ app.put('/usuarios/:id', (req, res) => {
                     }
                 })
             } else {
-                res.status(200).send('User não encontrado')
+                res.status(200).send('Usuário não encontrado')
             }
 
         })
