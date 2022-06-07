@@ -9,7 +9,7 @@ const cors = require('cors');
 app.use(express.urlencoded({ extended: false })); 
 app.use(express.json());
 
-var conString = 'postgres://htkshkkdygqgqg:a487b08b073f33b5d5e56df88b19f498bad415fec15d33c847bb91e3d2d3c441@ec2-52-44-13-158.compute-1.amazonaws.com:5432/d3q8sav94p4vhb';
+var conString = 'postgres://kuywuubmcnqtwf:d791c6ae3aaf567d7f047819791a7001182f0c902014cd9c784fcc9ce7828924@ec2-54-211-255-161.compute-1.amazonaws.com:5432/dc69luirutt0ns';
 
 const pool = new pg.Pool({connectionString: conString, ssl: {rejectUnauthorized: false}});
 
