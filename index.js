@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const app = express();
 const bcrypt = require('bcrypt');
@@ -13,9 +14,19 @@ var conString = 'postgres://kuywuubmcnqtwf:d791c6ae3aaf567d7f047819791a7001182f0
 
 const pool = new pg.Pool({connectionString: conString, ssl: {rejectUnauthorized: false}});
 
+const login = require('./middleware/login');
+
+//CONFIGS DOTENV
+/*
+const dbHost = process.env.DB_HOST;
+const dbPort = process.env.DB_PORT;
+const dbName = process.env.DB_NAME;
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASSWORD;
+*/
 //USUARIOS
 
-//rota principal -teste de rota
+//rota principal - teste de rota
 app.get('/', (req, res) => {
     pool.connect((err, client) => {
         if (err) {
