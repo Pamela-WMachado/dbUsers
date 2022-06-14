@@ -7,6 +7,7 @@ const pg = require('pg');
 const bodyparser = require('body-parser');
 const cors = require('cors');
 
+
 app.use(express.urlencoded({ extended: false })); 
 app.use(express.json());
 
@@ -23,8 +24,13 @@ const dbName = process.env.DB_NAME;
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
 */
-//USUARIOS
-
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
 //rota principal - teste de rota
 app.get('/', (req, res) => {
     pool.connect((err, client) => {
@@ -115,6 +121,7 @@ app.put('/usuarios/:id', (req, res) => {
     pool.connect((err, client) => {
         if (err) {
             return res.status(401).send('Conexão não autorizada')
+
         }
         client.query('select * from usuarios where id=$1', [req.params.id], (error, result) => {
             if (error) {
