@@ -1,6 +1,6 @@
-require('dotenv').config()
+module.exports = function (app) {
+
 const express = require('express');
-const app = express();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pg = require('pg');
@@ -12,40 +12,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 var conString = 'postgres://kuywuubmcnqtwf:d791c6ae3aaf567d7f047819791a7001182f0c902014cd9c784fcc9ce7828924@ec2-54-211-255-161.compute-1.amazonaws.com:5432/dc69luirutt0ns';
+    const pool = new pg.Pool({connectionString: conString, ssl: {rejectUnauthorized: false}});
 
-//const pool = new pg.Pool({connectionString: conString, ssl: {rejectUnauthorized: false}});
-
-const login = require('./middleware/login');
-
-/*CONFIGS DOTENV
-const dbHost = process.env.DB_HOST;
-const dbPort = process.env.DB_PORT;
-const dbName = process.env.DB_NAME;
-const dbUser = process.env.DB_USER;
-const dbPassword = process.env.DB_PASSWORD;
-*/
-
-//handling cors
-app.use(function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
-
-//swagger
-const swaggerUi = require('swagger-ui-express');
-const swaggerFile = require('./swagger_output.json');
-
-app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
-
-require('./endpoints')(app);
-
-
-/*colocar no endpoints
-
-//rota principal - teste de rota
+    //rota principal - teste de rota
 app.get('/', (req, res) => {
     pool.connect((err, client) => {
         if (err) {
@@ -226,7 +195,4 @@ app.post('/usuarios/login', (req, res) => {
     })
 })
 
-*/
-
-const PORT = process.env.PORT||'8080';
-app.listen(PORT, () => console.log(`aplicação em execução na url http://localhost:${PORT}`));
+}
