@@ -183,12 +183,6 @@ app.post('/usuarios/login', (req, res) => {
                 //release();
                 //criptografar a senha enviada e comparar com a recuperada
                 bcrypt.compare(req.body.senha, result.rows[0].senha, (error, results) => {
-                    if (error) {
-                        release();
-                        return res.status(401).send({
-                            message: "Falha na autenticação"
-                        })
-                    }
                     if (results) {
                         //release();
                         let token = jwt.sign({
@@ -199,16 +193,23 @@ app.post('/usuarios/login', (req, res) => {
                                 expiresIn: '1h'
                             })
                             release();
-                        return res.status(200).send({
+                            return res.status(200).send({
                             message: 'Conectado com sucesso',
                             token: token
                         })
                     }
+                    else {
+                        release();
+                        return res.status(401).send({
+                            message: "Falha na autenticação. Senha incorreta."
+                        })
+                    }
                 })
-            } else {
-                release();
-                return res.status(200).send({
-                    message: 'usuário não encontrado'
+                    } 
+                    else {
+                        release();
+                        return res.status(200).send({
+                        message: 'Usuário não encontrado'
                 })
             }
         })
